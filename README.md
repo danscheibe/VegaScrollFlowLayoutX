@@ -1,10 +1,4 @@
-![ios](https://cocoapod-badges.herokuapp.com/v/VegaScrollFlowLayout/badge.png)
-![ios](https://cocoapod-badges.herokuapp.com/p/VegaScrollFlowLayout/badge.png)
-![Swift 3.0.x](https://img.shields.io/badge/Swift-3.0.x-orange.svg)
-![GitHub license](https://cocoapod-badges.herokuapp.com/l/VegaScrollFlowLayout/badge.(png|svg))
-[![Twitter](https://img.shields.io/badge/contact-@Applikey_-blue.svg?style=flat)](https://twitter.com/Applikey_)
-
-Made by [Applikey Solutions](https://applikeysolutions.com)
+Fixed version of [VegaScrollFlowLayout](https://github.com/ApplikeySolutions/VegaScroll) by [Applikey Solutions](https://applikeysolutions.com)
 
 Find this [project on Dribbble](https://dribbble.com/shots/3793079-iPhone-8-iOS-11)
 
@@ -36,13 +30,13 @@ VegaScroll is a lightweight animation flowlayout for `UICollectionView` complete
 ### [CocoaPods](https://github.com/CocoaPods/CocoaPods)
 Add the following line in your `Podfile`.
 ```
-pod 'VegaScrollFlowLayout'
+pod 'VegaScrollFlowLayoutX'
 ```
 ### Carthage
 If you're using [Carthage](https://github.com/Carthage/Carthage) you can add a dependency on VegaScroll by adding it to your `Cartfile`:
 
 ```
-github "AppliKeySolutions/VegaScroll"
+github "ladeiko/VegaScrollFlowLayoutX"
 ```
 
 # Usage
@@ -61,6 +55,10 @@ layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
 ![example-plain](https://f.flockusercontent2.com/dc4259a15048016319908586)
 
 # Release Notes
+
+Version 1.2
+
+- Bug fixes
 
 Version 1.0
 

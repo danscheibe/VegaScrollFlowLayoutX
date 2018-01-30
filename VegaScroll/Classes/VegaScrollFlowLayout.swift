@@ -95,6 +95,8 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
 	
 	private func transformItemIfNeeded(y: CGFloat, item: UICollectionViewLayoutAttributes) {
 		guard itemSize.height > 0, y < itemSize.height * 0.5 else {
+            item.transform3D = transformIdentity
+            item.alpha = 1.0
 			return
 		}
 		
@@ -109,7 +111,16 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
 	}
 	
     override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return dynamicAnimator.layoutAttributesForCell(at: indexPath)!
+        if let attrs = dynamicAnimator.layoutAttributesForCell(at: indexPath) {
+            return attrs
+        }
+        
+        guard let collectionView = collectionView else { return nil }
+        let item = super.layoutAttributesForItem(at: indexPath)!
+        let convertedY = item.center.y - collectionView.contentOffset.y    - sectionInset.top
+        item.zIndex = item.indexPath.row
+        transformItemIfNeeded(y: convertedY, item: item)
+        return item
     }
     
     override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
