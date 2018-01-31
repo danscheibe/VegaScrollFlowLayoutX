@@ -56,6 +56,10 @@ layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
 
 # Release Notes
 
+Version 1.3
+
+- Add 'expandBy' property with default value of 1000. It is used when detecting which items are visible while preparing layout, collectionView size is increased by this value in height. If some items disappear while size change try to increase this value.
+
 Version 1.2
 
 - Bug fixes

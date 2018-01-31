@@ -18,6 +18,9 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
     open var springHardness: CGFloat = 15
     open var isPagingEnabled: Bool = true
     
+    // try to increase value if items disappear while layout change
+    open var expandBy: CGFloat = 1000
+    
     private var dynamicAnimator: UIDynamicAnimator!
     private var visibleIndexPaths = Set<IndexPath>()
     private var latestDelta: CGFloat = 0
@@ -52,9 +55,8 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return }
 		
 		// expand the visible rect slightly to avoid flickering when scrolling quickly
-		let expandBy: CGFloat = -100
         let visibleRect = CGRect(origin: collectionView.bounds.origin,
-                                 size: collectionView.frame.size).insetBy(dx: 0, dy: expandBy)
+                                 size: collectionView.frame.size).insetBy(dx: 0, dy: -(abs(expandBy) + 3 * itemSize.height))
         
         guard let visibleItems = super.layoutAttributesForElements(in: visibleRect) else { return }
         let indexPathsInVisibleRect = Set(visibleItems.map{ $0.indexPath })
