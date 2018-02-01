@@ -21,6 +21,25 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
     // try to increase value if items disappear while layout change
     open var expandBy: CGFloat = 1000
     
+    open var disableDynamicBehaviour = false {
+        didSet {
+            dynamicAnimator.behaviors.forEach { (behavior) in
+                guard let behavior = behavior as? UIAttachmentBehavior else {
+                    return
+                }
+
+                if disableDynamicBehaviour {
+                    behavior.damping = 0.0
+                    behavior.frequency = 0.0
+                }
+                else {
+                    behavior.damping = 0.8
+                    behavior.frequency = 1.0
+                }
+            }
+        }
+    }
+    
     private var dynamicAnimator: UIDynamicAnimator!
     private var visibleIndexPaths = Set<IndexPath>()
     private var latestDelta: CGFloat = 0
@@ -167,8 +186,9 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
             let springBehaviour = UIAttachmentBehavior(item: item, attachedToAnchor: item.center)
             
             springBehaviour.length = 0.0
-            springBehaviour.damping = 0.8
-            springBehaviour.frequency = 1.0
+            
+            springBehaviour.damping = disableDynamicBehaviour ? 0.0 : 0.8
+            springBehaviour.frequency = disableDynamicBehaviour ? 0.0 : 1.0
             
             if !CGPoint.zero.equalTo(touchLocation) {
                 item.center = getUpdatedBehaviorItemCenter(behavior: springBehaviour, touchLocation: touchLocation)
