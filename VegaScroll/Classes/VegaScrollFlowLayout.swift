@@ -33,8 +33,8 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
                     behavior.frequency = 0.0
                 }
                 else {
-                    behavior.damping = 0.8
-                    behavior.frequency = 1.0
+                    behavior.damping = damping
+                    behavior.frequency = frequency
                 }
             }
         }
@@ -161,6 +161,35 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
     
     // MARK: - Utils
     
+    private var damping: CGFloat {
+        if isPhoneX() {
+            return 0
+        }
+        else {
+            return 0.8
+        }
+    }
+    
+    private var frequency: CGFloat {
+        if isPhoneX() {
+            return 0
+        }
+        else {
+            return 1.0
+        }
+    }
+    
+    private func isPhoneX() -> Bool {
+        
+        if #available(iOS 11, *) {
+            if UIDevice().userInterfaceIdiom == .phone && UIScreen.main.nativeBounds.height == 2436 {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     private func removeNoLongerVisibleBehaviors(indexPathsInVisibleRect indexPaths: Set<IndexPath>) {
         //get no longer visible behaviors
         let noLongerVisibleBehaviours = dynamicAnimator.behaviors.filter { behavior in
@@ -187,8 +216,8 @@ open class VegaScrollFlowLayout: UICollectionViewFlowLayout {
             
             springBehaviour.length = 0.0
             
-            springBehaviour.damping = disableDynamicBehaviour ? 0.0 : 0.8
-            springBehaviour.frequency = disableDynamicBehaviour ? 0.0 : 1.0
+            springBehaviour.damping = disableDynamicBehaviour ? 0.0 : damping
+            springBehaviour.frequency = disableDynamicBehaviour ? 0.0 : frequency
             
             if !CGPoint.zero.equalTo(touchLocation) {
                 item.center = getUpdatedBehaviorItemCenter(behavior: springBehaviour, touchLocation: touchLocation)
